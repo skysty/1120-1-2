@@ -1,0 +1,29 @@
+using System.Data;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+ 
+namespace AdoNetWinFormsApp
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+ 
+            string connectionString = @"база құру керек";
+            string sql = "SELECT * FROM Users";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                //  DataAdapter объектісін құрамыз
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Dataset құрамыз
+                DataSet ds = new DataSet();
+                //  Dataset толтырамыз
+                adapter.Fill(ds);
+                // Деректерді экранға көрсетеміз
+                dataGridView1.DataSource = ds.Tables[0];
+            }
+        }
+    }
+}
